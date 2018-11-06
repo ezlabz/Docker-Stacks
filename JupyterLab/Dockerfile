@@ -1,19 +1,14 @@
-FROM jupyterhub/jupyterhub:latest
+FROM jupyter/all-spark-notebook:latest
 LABEL maintainer="jason.chong2@gmail.com"
-
+USER root
 RUN apt-get update && \
     apt-get install build-essential software-properties-common -y
-COPY . .    
-RUN useradd -m test
-RUN chmod a+rx pwd.sh
-RUN ./pwd.sh  
 
 RUN pip install --upgrade pip
 RUN pip install npm
 RUN pip install jupyterlab
 
 RUN jupyter serverextension enable --py jupyterlab
-RUN jupyter labextension install @jupyterlab/hub-extension
 RUN jupyter labextension install @jupyterlab/google-drive
 RUN jupyter labextension install @jupyterlab/git
 RUN pip install jupyterlab-git
